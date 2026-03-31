@@ -1,84 +1,150 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Nauka Mnożenia i Dzielenia</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- AUTH BAR -->
+  <div id="authBar">
+    <span id="authStatus"></span>
+    <button onclick="showLogin()">Zaloguj</button>
+    <button onclick="showRegister()">Rejestracja</button>
+  </div>
 
-<h1 class="title">📘 Nauka Mnożenia i Dzielenia</h1>
+  <div id="authModal" class="hidden">
+    <div id="authModalContent">
+      <h3 id="authModalTitle"></h3>
+      <input id="authUsername" placeholder="Login">
+      <input id="authPassword" type="password" placeholder="Hasło">
+      <button onclick="submitAuth()">OK</button>
+      <button onclick="closeAuth()">Anuluj</button>
+    </div>
+  </div>
 
-<!-- MENU -->
-<div id="menu" class="container">
-    <button class="menu-btn" data-action="lessons">Lekcje</button>
-    <button class="menu-btn" data-action="profile">Profil</button>
-    <button class="menu-btn" data-action="settings">Ustawienia</button>
-</div>
+  <!-- MENU GÓRNE -->
+  <header id="menu">
+    <div id="menu-left">
+      <span id="playerName">Nazwa</span>
+      <span id="coinsLabel">Coiny:</span>
+      <span id="coinsDisplay">0</span>
+    </div>
+    <div id="menu-buttons">
+      <button onclick="startQuiz()">NAUKA</button>
+      <button onclick="openPage('profile')">PROFIL</button>
+      <button onclick="openPage('shop')">SKLEP</button>
+      <button onclick="openPage('inventory')">EKWIPUNEK</button>
+      <button onclick="openPage('settings')">USTAW</button>
+      <button onclick="openPage('tasks')">ZADANIA</button>
+    </div>
+  </header>
 
-<!-- LEKCJE -->
-<div id="lessons" class="container hidden">
-    <h2>Wybierz działanie</h2>
-    <button class="menu-btn" data-mode="mnozenie">Mnożenie</button>
-    <button class="menu-btn" data-mode="dzielenie">Dzielenie</button>
-    <button class="menu-btn" data-action="menu">Powrót</button>
-</div>
+  <main>
+    <!-- QUIZ -->
+    <section id="quiz" class="page hidden">
+      <h2>Quiz</h2>
+      <div id="quizContainer">
+        <p id="quizQuestion"></p>
+        <div id="quizAnswers"></div>
+        <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden">Następne pytanie</button>
+      </div>
+    </section>
 
-<!-- ZAKRES -->
-<div id="range" class="container hidden">
-    <h2>Wybierz zakres (1–10)</h2>
-    <select id="rangeSelect"></select>
-    <br>
-    <button class="menu-btn" data-action="start">Start</button>
-    <button class="menu-btn" data-action="lessons">Powrót</button>
-</div>
+    <!-- NAGRODY -->
+    <section id="rewards" class="page hidden">
+      <h2>Wynik</h2>
+      <p id="rewardsTitle"></p>
+      <p id="rewardsCoins"></p>
+      <button onclick="openPage('menuDummy')">OK</button>
+    </section>
 
-<!-- GRA -->
-<div id="game" class="container hidden">
-    <h2 id="task"></h2>
-    <input type="number" id="answer" placeholder="Twoja odpowiedź">
-    <br>
-    <button class="menu-btn" data-action="check">Sprawdź</button>
-    <button class="menu-btn" data-action="menu">Zakończ</button>
-    <p id="feedback"></p>
-</div>
+    <!-- PROFIL -->
+    <section id="profile" class="page hidden">
+      <h2>Profil</h2>
 
-<!-- WYNIK -->
-<div id="result" class="container hidden">
-    <h2>🎉 Brawo!</h2>
-    <h3 id="scoreText"></h3>
-    <button class="menu-btn" data-action="menu">Powrót do menu</button>
-</div>
+      <div id="profileCard">
+        <div id="profileAvatarWrapper">
+          <div id="profileFrame"></div>
+          <div id="profileAvatar">Avatar</div>
+        </div>
+        <div id="profileNickWrapper">
+          <div id="profileNick">Nazwa</div>
+          <div id="xpBarWrapper">
+            <div id="xpLabel"></div>
+            <div id="xpBar">
+              <div id="xpFill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<!-- PROFIL -->
-<div id="profile" class="container hidden">
-    <h2>Twój profil</h2>
-    <img id="profile-avatar" src="" alt="Avatar">
-    <br><br>
-    <input type="file" id="avatarInput" accept="image/*">
-    <br>
-    <input type="text" id="nickname" placeholder="Nazwa użytkownika"><br>
-    <input type="text" id="country" placeholder="Kraj"><br>
-    <input type="date" id="birthdate"><br>
+      <div class="profile-section">
+        <h3>Ramki</h3>
+        <div id="profileFrames" class="profile-list"></div>
+      </div>
 
-    <button class="menu-btn" data-action="saveProfile">Zapisz profil</button>
-    <button class="menu-btn" data-action="menu">Powrót</button>
-</div>
+      <div class="profile-section">
+        <h3>Kolory nicku</h3>
+        <div id="profileNickColors" class="profile-list"></div>
+      </div>
+    </section>
 
-<!-- USTAWIENIA -->
-<div id="settings" class="container hidden">
-    <h2>Ustawienia strony</h2>
+    <!-- SKLEP -->
+    <section id="shop" class="page hidden">
+      <h2>Sklep</h2>
 
-    <label>Tryb wyświetlania:</label><br>
-    <select id="displayMode">
-        <option value="computer">Komputer</option>
-        <option value="phone">Telefon</option>
-    </select>
+      <div class="shop-category">
+        <h3>Ramki</h3>
+        <div id="shopFrames" class="shop-list"></div>
+      </div>
 
-    <br><br>
-    <button class="menu-btn" data-action="menu">Powrót</button>
-</div>
+      <div class="shop-category">
+        <h3>Tła</h3>
+        <div id="shopBackgrounds" class="shop-list"></div>
+      </div>
 
-<script src="script.js"></script>
+      <div class="shop-category">
+        <h3>Kolory nicku</h3>
+        <div id="shopNickColors" class="shop-list"></div>
+      </div>
+
+      <div class="shop-category">
+        <h3>Skrzynki</h3>
+        <div id="shopCrates" class="shop-list"></div>
+      </div>
+    </section>
+
+    <!-- EKWIPUNEK -->
+    <section id="inventory" class="page hidden">
+      <h2>Ekwipunek</h2>
+      <div class="inventory-section">
+        <h3>Skrzynki</h3>
+        <div id="inventoryCrates" class="inventory-list"></div>
+      </div>
+    </section>
+
+    <!-- USTAWIENIA -->
+    <section id="settings" class="page hidden">
+      <h2>Ustawienia</h2>
+      <div class="settings-section">
+        <h3>Tła strony</h3>
+        <div id="settingsBackgrounds" class="settings-list"></div>
+      </div>
+    </section>
+
+    <!-- ZADANIA -->
+    <section id="tasks" class="page hidden">
+      <h2>Zadania dzienne</h2>
+      <div id="tasksList"></div>
+    </section>
+
+    <!-- PUSTA STRONA MENU (do powrotu) -->
+    <section id="menuDummy" class="page hidden">
+      <h2>Wybierz tryb z góry</h2>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
