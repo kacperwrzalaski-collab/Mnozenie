@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nauka Mnożenia i Dzielenia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="title">📘 Nauka Mnożenia i Dzielenia</h1>
+
+<!-- MENU -->
+<div id="menu" class="container">
+    <button class="menu-btn" data-action="lessons">Lekcje</button>
+    <button class="menu-btn" data-action="profile">Profil</button>
+    <button class="menu-btn" data-action="settings">Ustawienia</button>
+</div>
+
+<!-- LEKCJE -->
+<div id="lessons" class="container hidden">
+    <h2>Wybierz działanie</h2>
+    <button class="menu-btn" data-mode="mnozenie">Mnożenie</button>
+    <button class="menu-btn" data-mode="dzielenie">Dzielenie</button>
+    <button class="menu-btn" data-action="menu">Powrót</button>
+</div>
+
+<!-- ZAKRES -->
+<div id="range" class="container hidden">
+    <h2>Wybierz zakres (1–10)</h2>
+    <select id="rangeSelect"></select>
+    <br>
+    <button class="menu-btn" data-action="start">Start</button>
+    <button class="menu-btn" data-action="lessons">Powrót</button>
+</div>
+
+<!-- GRA -->
+<div id="game" class="container hidden">
+    <h2 id="task"></h2>
+    <input type="number" id="answer" placeholder="Twoja odpowiedź">
+    <br>
+    <button class="menu-btn" data-action="check">Sprawdź</button>
+    <button class="menu-btn" data-action="menu">Zakończ</button>
+    <p id="feedback"></p>
+</div>
+
+<!-- WYNIK -->
+<div id="result" class="container hidden">
+    <h2>🎉 Brawo!</h2>
+    <h3 id="scoreText"></h3>
+    <button class="menu-btn" data-action="menu">Powrót do menu</button>
+</div>
+
+<!-- PROFIL -->
+<div id="profile" class="container hidden">
+    <h2>Twój profil</h2>
+    <img id="profile-avatar" src="" alt="Avatar">
+    <br><br>
+    <input type="file" id="avatarInput" accept="image/*">
+    <br>
+    <input type="text" id="nickname" placeholder="Nazwa użytkownika"><br>
+    <input type="text" id="country" placeholder="Kraj"><br>
+    <input type="date" id="birthdate"><br>
+
+    <button class="menu-btn" data-action="saveProfile">Zapisz profil</button>
+    <button class="menu-btn" data-action="menu">Powrót</button>
+</div>
+
+<!-- USTAWIENIA -->
+<div id="settings" class="container hidden">
+    <h2>Ustawienia strony</h2>
+
+    <label>Tryb wyświetlania:</label><br>
+    <select id="displayMode">
+        <option value="computer">Komputer</option>
+        <option value="phone">Telefon</option>
+    </select>
+
+    <br><br>
+    <button class="menu-btn" data-action="menu">Powrót</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

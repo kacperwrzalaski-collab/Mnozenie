@@ -1,0 +1,69 @@
+body {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    transition: 0.3s;
+}
+
+body.phone {
+    font-size: 22px;
+}
+
+body.phone button {
+    width: 90%;
+    font-size: 24px;
+}
+
+.title {
+    text-shadow: 0 0 10px #00eaff;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    margin-top: 40px;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-btn {
+    padding: 14px 28px;
+    margin: 12px;
+    background: linear-gradient(135deg, #00eaff, #0077ff);
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+    box-shadow: 0 0 10px #00eaff;
+}
+
+.menu-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #00eaff;
+}
+
+input, select {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 18px;
+}
+
+#profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #00eaff;
+    object-fit: cover;
+}
