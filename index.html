@@ -1,150 +1,158 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Quiz Game</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Math Quiz Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- AUTH BAR -->
-  <div id="authBar">
-    <span id="authStatus"></span>
-    <button onclick="showLogin()">Zaloguj</button>
-    <button onclick="showRegister()">Rejestracja</button>
-  </div>
 
-  <div id="authModal" class="hidden">
-    <div id="authModalContent">
-      <h3 id="authModalTitle"></h3>
-      <input id="authUsername" placeholder="Login">
-      <input id="authPassword" type="password" placeholder="Hasło">
-      <button onclick="submitAuth()">OK</button>
-      <button onclick="closeAuth()">Anuluj</button>
+<!-- ========================= -->
+<!--  EKRAN LOGOWANIA -->
+<!-- ========================= -->
+<div id="authScreen">
+  <div id="authBox">
+    <h1>Math Quiz</h1>
+
+    <div id="authTabs">
+      <button id="loginTab" class="active" onclick="switchAuth('login')">Logowanie</button>
+      <button id="registerTab" onclick="switchAuth('register')">Rejestracja</button>
+    </div>
+
+    <div id="authForm">
+      <label>Login</label>
+      <input type="text" id="authUsername">
+
+      <label>Hasło</label>
+      <input type="password" id="authPassword">
+
+      <button id="authSubmit" onclick="submitAuth()">Zaloguj</button>
     </div>
   </div>
+</div>
 
-  <!-- MENU GÓRNE -->
-  <header id="menu">
-    <div id="menu-left">
-      <span id="playerName">Nazwa</span>
-      <span id="coinsLabel">Coiny:</span>
-      <span id="coinsDisplay">0</span>
-    </div>
-    <div id="menu-buttons">
-      <button onclick="startQuiz()">NAUKA</button>
-      <button onclick="openPage('profile')">PROFIL</button>
-      <button onclick="openPage('shop')">SKLEP</button>
-      <button onclick="openPage('inventory')">EKWIPUNEK</button>
-      <button onclick="openPage('settings')">USTAW</button>
-      <button onclick="openPage('tasks')">ZADANIA</button>
-    </div>
-  </header>
+<!-- ========================= -->
+<!--  LAYOUT GRY -->
+<!-- ========================= -->
+<div id="layout" class="hidden">
 
-  <main>
-    <!-- QUIZ -->
+  <!-- LEWY PASEK -->
+  <aside id="sidebar">
+
+    <!-- PANEL GRACZA -->
+    <div id="playerCard">
+      <div id="playerAvatarWrapper">
+        <div id="playerFrame"></div>
+        <div id="playerAvatar">A</div>
+      </div>
+
+      <div id="playerInfo">
+        <div id="playerNameSidebar">Nazwa</div>
+        <div id="playerCoinsSidebar">💰 <span id="coinsDisplay">0</span></div>
+
+        <div id="playerXPBar">
+          <div id="playerXPFill"></div>
+        </div>
+        <div id="playerXPLabel">Poziom: Drewno I (0/100 XP)</div>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <nav id="sidebarMenu">
+      <button onclick="startQuiz()">📘 Nauka</button>
+      <button onclick="openPage('profile')">👤 Profil</button>
+      <button onclick="openPage('shop')">🛒 Sklep</button>
+      <button onclick="openPage('inventory')">🎁 Ekwipunek</button>
+      <button onclick="openPage('tasks')">📜 Zadania</button>
+      <button onclick="openPage('gamepass')">🎫 Game Pass</button>
+      <button onclick="openPage('settings')">⚙️ Ustawienia</button>
+      <button onclick="logout()">🚪 Wyloguj</button>
+    </nav>
+
+  </aside>
+
+  <!-- PRAWA STRONA -->
+  <main id="content">
+
+    <section id="menuDummy" class="page">
+      <h1>Witaj w Math Quiz</h1>
+      <p>Wybierz tryb z lewego paska.</p>
+    </section>
+
     <section id="quiz" class="page hidden">
-      <h2>Quiz</h2>
-      <div id="quizContainer">
-        <p id="quizQuestion"></p>
-        <div id="quizAnswers"></div>
-        <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden">Następne pytanie</button>
-      </div>
+      <h2>Quiz – tabliczka mnożenia</h2>
+      <div id="quizQuestion"></div>
+      <div id="quizAnswers"></div>
+      <button id="nextQuestionBtn" class="primary hidden" onclick="nextQuestion()">Następne pytanie</button>
     </section>
 
-    <!-- NAGRODY -->
-    <section id="rewards" class="page hidden">
-      <h2>Wynik</h2>
-      <p id="rewardsTitle"></p>
-      <p id="rewardsCoins"></p>
-      <button onclick="openPage('menuDummy')">OK</button>
-    </section>
-
-    <!-- PROFIL -->
-    <section id="profile" class="page hidden">
-      <h2>Profil</h2>
-
-      <div id="profileCard">
-        <div id="profileAvatarWrapper">
-          <div id="profileFrame"></div>
-          <div id="profileAvatar">Avatar</div>
-        </div>
-        <div id="profileNickWrapper">
-          <div id="profileNick">Nazwa</div>
-          <div id="xpBarWrapper">
-            <div id="xpLabel"></div>
-            <div id="xpBar">
-              <div id="xpFill"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="profile-section">
-        <h3>Ramki</h3>
-        <div id="profileFrames" class="profile-list"></div>
-      </div>
-
-      <div class="profile-section">
-        <h3>Kolory nicku</h3>
-        <div id="profileNickColors" class="profile-list"></div>
-      </div>
-    </section>
-
-    <!-- SKLEP -->
     <section id="shop" class="page hidden">
       <h2>Sklep</h2>
-
-      <div class="shop-category">
-        <h3>Ramki</h3>
-        <div id="shopFrames" class="shop-list"></div>
-      </div>
-
-      <div class="shop-category">
-        <h3>Tła</h3>
-        <div id="shopBackgrounds" class="shop-list"></div>
-      </div>
-
-      <div class="shop-category">
-        <h3>Kolory nicku</h3>
-        <div id="shopNickColors" class="shop-list"></div>
-      </div>
-
-      <div class="shop-category">
-        <h3>Skrzynki</h3>
-        <div id="shopCrates" class="shop-list"></div>
-      </div>
+      <h3>Ramki</h3>
+      <div id="shopFrames" class="shop-grid"></div>
+      <h3>Tła</h3>
+      <div id="shopBackgrounds" class="shop-grid"></div>
+      <h3>Kolory nicków</h3>
+      <div id="shopNickColors" class="shop-grid"></div>
+      <h3>Skrzynki</h3>
+      <div id="shopCrates" class="shop-grid"></div>
     </section>
 
-    <!-- EKWIPUNEK -->
+    <section id="profile" class="page hidden">
+      <h2>Profil</h2>
+      <div id="profileHeader">
+        <div id="profileFrame">
+          <div id="profileAvatar">A</div>
+        </div>
+        <div id="profileInfoRight">
+          <div id="profileNick">Nazwa</div>
+          <div id="xpBar"><div id="xpFill"></div></div>
+          <div id="xpLabel">Poziom: Drewno I (0/100 XP)</div>
+        </div>
+      </div>
+
+      <input type="file" id="avatarUpload" accept="image/*" class="hidden" onchange="uploadAvatar(event)">
+      <button class="primary" onclick="document.getElementById('avatarUpload').click()">Wgraj zdjęcie</button>
+
+      <h3>Ramki</h3>
+      <div id="profileFrames" class="profile-grid"></div>
+
+      <h3>Kolory nicków</h3>
+      <div id="profileNickColors" class="profile-grid"></div>
+    </section>
+
     <section id="inventory" class="page hidden">
       <h2>Ekwipunek</h2>
-      <div class="inventory-section">
-        <h3>Skrzynki</h3>
-        <div id="inventoryCrates" class="inventory-list"></div>
-      </div>
+      <div id="inventoryCrates" class="inventory-list"></div>
     </section>
 
-    <!-- USTAWIENIA -->
+    <section id="tasks" class="page hidden">
+      <h2>Zadania</h2>
+      <div id="tasksList" class="tasks-list"></div>
+    </section>
+
+    <section id="gamepass" class="page hidden">
+      <h2>Game Pass</h2>
+      <button class="primary" id="buyPremiumBtn" onclick="buyPremiumPass()">Kup Premium Pass (5000💰)</button>
+      <div id="gamepassList"></div>
+    </section>
+
     <section id="settings" class="page hidden">
       <h2>Ustawienia</h2>
-      <div class="settings-section">
-        <h3>Tła strony</h3>
-        <div id="settingsBackgrounds" class="settings-list"></div>
-      </div>
+      <div id="settingsBackgrounds" class="settings-grid"></div>
     </section>
 
-    <!-- ZADANIA -->
-    <section id="tasks" class="page hidden">
-      <h2>Zadania dzienne</h2>
-      <div id="tasksList"></div>
+    <section id="rewards" class="page hidden">
+      <h2>Wynik quizu</h2>
+      <p id="rewardsTitle"></p>
+      <p id="rewardsCoins"></p>
+      <button class="primary" onclick="openPage('menuDummy'); quizIndex=0; quizCorrect=0;">OK</button>
     </section>
 
-    <!-- PUSTA STRONA MENU (do powrotu) -->
-    <section id="menuDummy" class="page hidden">
-      <h2>Wybierz tryb z góry</h2>
-    </section>
   </main>
 
-  <script src="app.js"></script>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
