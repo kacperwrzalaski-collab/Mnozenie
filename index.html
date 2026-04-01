@@ -133,8 +133,28 @@
 
     <section id="gamepass" class="page hidden">
       <h2>Game Pass</h2>
+
+      <div id="gamepassHeader">
+        <div id="gamepassXPBar">
+          <div id="gamepassXPFill"></div>
+        </div>
+        <div id="gamepassXPLabel">Poziom karnetu: 1 (0/100 XpassP)</div>
+      </div>
+
       <button class="primary" id="buyPremiumBtn" onclick="buyPremiumPass()">Kup Premium Pass (5000💰)</button>
-      <div id="gamepassList"></div>
+
+      <div id="gamepassAxisWrapper">
+        <div id="gamepassAxis">
+          <div class="gamepass-row gamepass-row-premium">
+            <span class="row-label">PREMIUM</span>
+            <div class="gamepass-levels" id="gamepassPremiumRow"></div>
+          </div>
+          <div class="gamepass-row gamepass-row-free">
+            <span class="row-label">FREE</span>
+            <div class="gamepass-levels" id="gamepassFreeRow"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="settings" class="page hidden">
